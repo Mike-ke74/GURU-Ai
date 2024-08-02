@@ -1,6 +1,6 @@
 FROM quay.io/gurusensei/gurubhay:latest
 
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+RUN addgroup -g 10001 appgroup && adduser -u 10001 -G appgroup -S appuser
 
 RUN git clone https://github.com/Guru322/GURU-Ai /home/appuser/guru \
     && chown -R appuser:appgroup /home/appuser/guru
@@ -11,6 +11,7 @@ RUN npm install --platform=linuxmusl
 
 EXPOSE 5000
 
-USER appuser
+USER 10001
 
 CMD ["npm", "start"]
+
