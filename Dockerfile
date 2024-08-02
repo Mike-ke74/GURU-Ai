@@ -1,7 +1,16 @@
-FROM node:16-alpine
+FROM quay.io/gurusensei/gurubhay:latest
 
-RUN addgroup -g 10014 appgroup && adduser -u 10014 -G appgroup -S appuser
+RUN useradd -m -u 10014 appuser
 
-USER 10014
+RUN git clone https://github.com/Guru322/GURU-Ai /home/appuser/guru \
+    && chown -R appuser:appuser /home/appuser/guru
 
-CMD ["whoami"]
+WORKDIR /home/appuser/guru/
+
+RUN npm install --platform=linuxmusl
+
+EXPOSE 5000
+
+USER appuser
+
+CMD ["npm", "start"]
