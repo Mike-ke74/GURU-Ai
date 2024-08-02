@@ -1,17 +1,7 @@
-FROM quay.io/gurusensei/gurubhay:latest
+FROM node:16-alpine
 
-RUN useradd -u 10014 -m -d /home/appuser -s /bin/bash appuser
-
-RUN git clone https://github.com/Guru322/GURU-Ai /home/appuser/guru \
-    && chown -R appuser:appuser /home/appuser/guru
-
-WORKDIR /home/appuser/guru/
-
-RUN npm install --platform=linuxmusl
-
-EXPOSE 5000
+RUN addgroup -g 10014 appgroup && adduser -u 10014 -G appgroup -S appuser
 
 USER 10014
 
-CMD ["npm", "start"]
-
+CMD ["whoami"]
